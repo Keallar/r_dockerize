@@ -1,0 +1,31 @@
+en:
+  r_dockerize:
+    errors:
+      messages:
+        command_not_found: "Non-existent command: %{command}. Available commands: %{av_commands}"
+        js_not_found: "Non available js option: %{option}. Available options: %{av_options}"
+        db_not_found: "Non available db option: %{option}. Available options: %{av_options}"
+        subservice_not_found: "Non available subservices option: %{option}. Available options: %{av_options}"
+    docker:
+      standard:  "FROM ruby:%{ruby_version}\n\nRUN apt-get update -qq && apt-get install -y postgresql-client\n\nRUN curl -sL https://deb.nodesource.com/setup_19.x | bash -\\\n  && apt-get update -qq && apt-get install -qq --no-install-recommends \\\n    nodejs \\\n  && apt-get upgrade -qq \\\n  && apt-get clean \\\n  && rm -rf /var/lib/apt/lists/*\\\n  && npm install -g yarn@1\n\nRUN yarn add esbuild\nRUN yarn add sass\n\nENV APP_APTH=/usr/src\nWORKDIR $APP_APTH\n\nADD Gemfile $APP_APTH/Gemfile\nADD Gemfile.lock $APP_APTH/Gemfile.lock\n\nRUN yarn install\n\nRUN bundle install\n"
+      template: "FROM ruby:%{ruby_version}"
+      db:
+        sqlite: ""
+      js_pm:
+        yarn: ""
+        npm: ""
+    dco:
+      template: "version: '3.5'\n\nservices:\n  app:\n    build: .\n    command: sh -c \"rm -f tmp/pids/server.pid && bin/dev\"\n    tty: true\n    volumes:\n      - .:/usr/src\n    stdin_open: true\n    ports:\n      - \"3000:3000\"\n\n  %{js_option}%{db_option}%{subservices_option}\n\n%{volumes_option}"
+      js:
+        importmap: "importmap"
+        esbuild: "esbuild"
+        webpack: "webpack"
+      db:
+        postgresql: "db:\n    image: postgres\n    environment:\n      - POSTGRES_USER=user\n      - POSTGRES_PASSWORD=pass\n    volumes:\n      - postgresql:/var/lib/postgresql/data\n    ports:\n      - \"5432:5432\""
+        mysql: "db:\n        image: mysql:5.7\n        restart: always\n        environment:\n           - MYSQL_ROOT_PASSWORD: password\n           - MYSQL_DATABASE: app\n           - MYSQL_USER: user\n           - MYSQL_PASSWORD: password\n        ports:\n            - \"3307:3306\""
+        mongodb: "mongo:\n    image: \"mongo:4.2.8\"\n    environment:\n      MONGO_INITDB_ROOT_USERNAME: root\n      MONGO_INITDB_ROOT_PASSWORD: example\n    ports:\n      - \"27017:27017\"\n    volumes:\n      - \"mongodb:/var/lib/mongodb/data\""
+        sqlite: "db:\n    image: nouchka/sqlite3:latest\n    volumes:\n      - db:/root/db\n    stdin_open: true\n    tty: true"
+      subservices:
+        redis: "redis:\n    image: redis:alpine\n    expose:\n      - 6379\n    volumes:\n      -redis:/data\n\n"
+        rabbitmq: "rabbitmq:\n    platform: linux/x86_64\n    image: rabbitmq:management-alpine\n    ports:\n      - 15672:15672\n    expose:\n      - 5672\n\n"
+        sidekiq: "sidekiq:\n    <<: *app\n    build:\n      command: bundle exec sidekiq"

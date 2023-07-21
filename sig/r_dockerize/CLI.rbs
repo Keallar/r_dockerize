@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+module RDockerize
+  class CLI
+    @option_parser: OptionParser
+    @print_help: bool
+    COMMANDS: Hash[string, string]
+
+    def initialize: () -> void
+
+    def run: (args: Array[String]) -> void
+
+    private
+
+    def option_parser: -> OptionParser
+
+    def print_version?: (args: Array[String]) -> void
+
+    def parse_command: (args: Array[String]) -> string
+  end
+end

@@ -1,0 +1,25 @@
+# frozen_string_literal: true
+
+module RDockerize
+  module Commands
+    class Docker < Base
+      attr_reader js_np: string
+      attr_reader db: string
+      attr_reader rv: string
+
+      def self.run: (args: Array[String]) -> void
+
+      def parse: (args: Array[String]) -> void
+
+      def run: () -> void
+
+      private
+
+      def prepare_js_np: (string) -> void
+
+      def prepare_db: (string) -> void
+
+      def prepare_text: -> string
+    end
+  end
+end

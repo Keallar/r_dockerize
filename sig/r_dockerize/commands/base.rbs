@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+module RDockerize
+  module Commands
+    class Base
+      BASE_KEY: string
+
+      def self.run: (args: Array[String]) -> void
+
+      def initialize: (args: Array[String]) -> void
+
+      def run: () -> void
+
+      def parse: (args: Array[String]) -> void
+
+      def opt_parser: () -> OptionParser
+    end
+  end
+end

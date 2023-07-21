@@ -1,0 +1,17 @@
+module RDockerize
+  VERSION: string
+
+  DEBUG: bool
+
+  STANDARD_COMPOSE_VERSION: Float
+
+  JAVASCRIPT: Array[string]
+
+  DATABASE: Array[string]
+
+  JAVASCRIPT_PM: Array[string]
+
+  SUBSERVICES: Array[string]
+
+  AVAILABLE_COMPOSE_VERSIONS: Array[Float]
+end

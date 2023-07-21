@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+module RDockerize
+  module Commands
+    class Dockerize
+      def self.run: (args: Array[String]) -> void
+
+      def run: () -> void
+
+      def parse: (args: Array[String]) -> void
+    end
+  end
+end

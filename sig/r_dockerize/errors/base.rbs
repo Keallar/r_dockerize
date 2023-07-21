@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+module RDockerize
+  module Errors
+    class Base
+      BASE_KEY: string
+
+      attr_reader key: String
+      attr_reader attrs: Hash[Symbol, String]
+
+      def create_message: () -> String
+    end
+  end
+end

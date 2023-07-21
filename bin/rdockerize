@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+lib_path = File.expand_path("../lib", __dir__)
+$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include? lib_path
+
+require "r_dockerize/cli"
+
+begin
+  cli = RDockerize::CLI.new
+  cli.run(ARGV)
+rescue StandardError => e
+  $stderr.puts e.message
+  $stderr.puts e.backtrace.join("\n") if RDockerize::DEBUG
+  exit 1
+end

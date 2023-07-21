@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+module RDockerize
+  module Errors
+    class DbNotFound < Base
+      def initialize: (attrs: Hash[Symbol, String]) -> void
+    end
+  end
+end
