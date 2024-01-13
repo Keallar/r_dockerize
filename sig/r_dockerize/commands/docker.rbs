@@ -20,6 +20,8 @@ module RDockerize
       def prepare_db: (string) -> void
 
       def prepare_text: -> string
+
+      def save_template: -> untyped
     end
   end
 end

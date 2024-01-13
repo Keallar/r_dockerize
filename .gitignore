@@ -12,3 +12,5 @@
 .idea
 .env
 .ruby-lsp
+docker-compose.yml
+Dockerfile

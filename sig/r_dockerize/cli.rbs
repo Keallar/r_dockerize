@@ -12,9 +12,11 @@ module RDockerize
 
     private
 
+    def banner: -> String
+
     def option_parser: -> OptionParser
 
-    def print_version?: (args: Array[String]) -> void
+    def print_help?: (args: Array[String]) -> void
 
     def parse_command: (args: Array[String]) -> string
   end

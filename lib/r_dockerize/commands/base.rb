@@ -34,6 +34,10 @@ module RDockerize
           end
         end
       end
+
+      def banner
+        raise NotImplementedError
+      end
     end
   end
 end

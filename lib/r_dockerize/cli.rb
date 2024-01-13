@@ -21,15 +21,17 @@ module RDockerize
       command = parse_command(args)
 
       puts "COMMAND: #{command}"
-      print_version?(args) unless command
+      print_help?(args) unless command
 
       begin
         Object.const_get(COMMANDS[command]).run(args)
       rescue TypeError, KeyError
         raise RDockerize::Errors::CommandNotFound, command: command, av_commands: COMMANDS.keys.join(", ")
       rescue StandardError => e
-        $stdout.puts e.message
-        $stdout.puts e.backtrace.join("\n") if RDockerize::DEBUG
+        if RDockerize::DEBUG
+          $stdout.puts e.message
+          $stdout.puts e.backtrace.join("\n")
+        end
       end
     end
 
@@ -37,22 +39,23 @@ module RDockerize
 
     def option_parser
       @option_parser ||= OptionParser.new do |opts|
-        opts.banner = "Usage:\n   rdockerize <command> [options] \nCommands:\n   (dco compose docker-compose) docker dockerize"
+        opts.banner = banner
 
-        opts.on("-v", "--version", "# Print the version number, then exit") do
-          $stdout.puts RDockerize::VERSION
+        opts.on("-v", "--version", "Print the version number, then exit") do
+          $stdout.puts "v#{RDockerize::VERSION}"
           exit 0
         end
 
-        opts.on("-h", "--help", "# Print help") do
+        opts.on("-h", "--help", "Print help") do
           $stdout.puts opts
           exit 0
         end
       end
     end
 
-    def print_version?(args)
+    def print_help?(args)
       c_args = args.clone
+      c_args << "-h"
       begin
         option_parser.parse!(c_args)
       rescue OptionParser::InvalidOption => e
@@ -71,6 +74,18 @@ module RDockerize
         retry
       end
       command
+    end
+
+    def banner
+      <<~USAGE
+        Usage:
+          rdockerize <command> [options]
+
+        Commands:
+          dockerize                          Create both files (Dockerfile and docker-compose.yml)
+          dco (or compose, docker-compose)   Create docker-compose.yml file
+          docker                             Create Dockerfile
+      USAGE
     end
   end
 end

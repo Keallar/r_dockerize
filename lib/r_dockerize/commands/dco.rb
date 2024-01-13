@@ -14,7 +14,7 @@ module RDockerize
         @db = "sqlite"
 
         parser = opt_parser do |opts|
-          opts.banner = "Usage:\n   rdockerize dco/docker-compose [options]"
+          opts.banner = banner
 
           opts.on("-j", "--javascript=JAVASCRIPT") do |val|
             prepare_js(val)
@@ -40,27 +40,50 @@ module RDockerize
         File.open("docker-compose.yml", "w+") { |f| f.write(text) }
       end
 
+      protected
+
+      def banner
+        <<~USAGE
+          Usage:
+            rdockerize dco [options]
+            rdockerize compose [options]
+            rdockerize docker-compose [options]
+
+          Options:
+            -j [--javascript=JAVASCRIPT]
+            -r [--ruby_version=RUBY_VERSION]
+            -s [--subservices=SUBSERVICES]
+        USAGE
+      end
+
       private
 
-      # rubocop disable:Layout/LineLength
       def prepare_js(option)
-        raise RDockerize::Errors::JsNotFound, option: option, av_options: RDockerize::JAVASCRIPT.join(" ") unless JAVASCRIPT.include?(option)
+        unless JAVASCRIPT.include?(option)
+          raise RDockerize::Errors::JsNotFound, option: option,
+                                                av_options: RDockerize::JAVASCRIPT.join(" ")
+        end
 
         @js = option
       end
 
       def prepare_db(option)
-        raise RDockerize::Errors::DbNotFound, option: option, av_options: DATABASE.join(" ") unless DATABASE.include?(option)
+        unless DATABASE.include?(option)
+          raise RDockerize::Errors::DbNotFound, option: option,
+                                                av_options: DATABASE.join(" ")
+        end
 
         @db = option
       end
 
       def prepare_subservices(option)
-        raise RDockerize::Errors::SubserviceNotFound, option: option, av_options: SUBSERVICES.join(" ") unless SUBSERVICES.include?(option)
+        unless SUBSERVICES.include?(option)
+          raise RDockerize::Errors::SubserviceNotFound, option: option,
+                                                        av_options: SUBSERVICES.join(" ")
+        end
 
         @subservices = option
       end
-      # rubocop enable:Layout/LineLength
 
       def prepare_text
         js_text = I18n.t("#{BASE_KEY}.dco.js.#{@js}") if js_text
@@ -75,8 +98,10 @@ module RDockerize
 
         volumes_text = "volumes:\n  #{@db}:"
 
-        I18n.t("#{BASE_KEY}.dco.template",
-               js_option: js_text, db_option: db_text, subservices_option: subservice_text, volumes_option: volumes_text)
+        I18n.t(
+          "#{BASE_KEY}.dco.template",
+          js_option: js_text, db_option: db_text, subservices_option: subservice_text, volumes_option: volumes_text
+        )
       end
     end
     # rubocop enable:Style/IfUnlessModifier

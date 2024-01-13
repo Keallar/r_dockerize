@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 require "i18n"
+require "yaml"
 
 module RDockerize
   VERSION = "0.1.0"
 
   DEBUG = true
 
-  STANDARD_COMPOSE_VERSION = 3.5
+  STANDARD_COMPOSE_VERSION = 3.5.freeze
 
   JAVASCRIPT = %w[importmap esbuild webpack].freeze
 

@@ -22,6 +22,3 @@ Style/StderrPuts:
 
 Style/Documentation:
   Enabled: false
-
-Lint/UselessMethodDefinition:
-  Enabled: false
