@@ -3,21 +3,33 @@
 module RDockerize
   module Commands
     class Docker < Base
-      attr_reader :db, :js_np, :rv
+      attr_reader :db, :js_np, :rv, :user_temp, :show
 
       def self.run(args)
         new(args).run
       end
 
+      def initialize(args)
+        @user_temp = false
+        @show = false
+        super(args)
+      end
+
+      # rubocop:disable Metrics/MethodLength
       def parse(args)
         @rv = RUBY_VERSION
 
         parser = opt_parser do |opts|
           opts.banner = banner
 
-          opts.on("-s", "--save=FILE_PATH") do |val|
-            save_template(val)
-            $stdout.puts val
+          opts.on("-s", "--show") do
+            @show = true
+            $stdout.puts "Show"
+          end
+
+          opts.on("-u", "--user") do
+            @user_temp = true
+            $stdout.puts "User template"
           end
 
           opts.on("-j", "--javascript=JAVASCRIPT") do |val|
@@ -38,9 +50,12 @@ module RDockerize
 
         parser.parse!(args)
       end
+      # rubocop:enable Metrics/MethodLength
 
       def run
         text = prepare_text
+        return $stdout.puts text if @show
+
         File.open("Dockerfile", "w+") { |f| f.write(text) }
       end
 
@@ -55,7 +70,7 @@ module RDockerize
             -j [--javascript=JAVASCRIPT]
             -r [--ruby_version=RUBY_VERSION]
             -d [--database=DATABASE]
-            -s [--save=FILE]
+            -u [--user]
         USAGE
       end
 
@@ -80,6 +95,7 @@ module RDockerize
       end
 
       def prepare_text
+        return I18n.t("#{BASE_KEY}.docker.user_template") if @user_temp
         return I18n.t("#{BASE_KEY}.docker.standard", ruby_version: @rv) unless @db && @js_np
 
         js_np_text = I18n.t("#{BASE_KEY}.docker.js_np.#{@js_np}")
@@ -87,19 +103,6 @@ module RDockerize
 
         I18n.t("#{BASE_KEY}.docker.template",
                ruby_version: @rv, js_np_option: js_np_text, db_option: db_text)
-      end
-
-      def save_template(path)
-        user_data = File.read(File.expand_path(path))
-        i18n_path = I18n.load_path.last
-        yaml_hash = YAML.load(File.read(i18n_path), symbolize_names: true)
-        yaml_hash[:en][:r_dockerize][:docker][:user_template] = user_data
-        File.write(i18n_path, yaml_hash.to_yaml)
-      end
-
-      # Validate filename of template
-      def check_template
-
       end
     end
   end

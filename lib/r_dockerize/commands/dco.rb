@@ -4,10 +4,15 @@ module RDockerize
   module Commands
     # rubocop disable:Style/IfUnlessModifier
     class Dco < Base
-      attr_reader :db, :js, :subservices, :volumes
+      attr_reader :db, :js, :subservices, :volumes, :show
 
       def self.run(args)
         new(args).run
+      end
+
+      def initialize(args)
+        @show = false
+        super
       end
 
       def parse(args)
@@ -15,6 +20,10 @@ module RDockerize
 
         parser = opt_parser do |opts|
           opts.banner = banner
+
+          opts.on("-s", "--show") do
+            @show = true
+          end
 
           opts.on("-j", "--javascript=JAVASCRIPT") do |val|
             prepare_js(val)
@@ -26,7 +35,7 @@ module RDockerize
             $stdout.puts @db
           end
 
-          opts.on("-s", "--subservices=SUBSERVICES") do |val|
+          opts.on("-b", "--subservices=SUBSERVICES") do |val|
             prepare_subservices(val)
             $stdout.puts @subservices
           end
@@ -37,6 +46,8 @@ module RDockerize
 
       def run
         text = prepare_text
+        return $stdout.puts text if @show
+
         File.open("docker-compose.yml", "w+") { |f| f.write(text) }
       end
 
@@ -52,7 +63,8 @@ module RDockerize
           Options:
             -j [--javascript=JAVASCRIPT]
             -r [--ruby_version=RUBY_VERSION]
-            -s [--subservices=SUBSERVICES]
+            -b [--subservices=SUBSERVICES]
+            -s [--show]
         USAGE
       end
 

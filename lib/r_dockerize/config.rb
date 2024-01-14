@@ -8,7 +8,7 @@ module RDockerize
 
   DEBUG = true
 
-  STANDARD_COMPOSE_VERSION = 3.5.freeze
+  STANDARD_COMPOSE_VERSION = 3.5
 
   JAVASCRIPT = %w[importmap esbuild webpack].freeze
 

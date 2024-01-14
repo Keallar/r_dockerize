@@ -3,17 +3,13 @@
 module RDockerize
   module Commands
     class Dco < Base
-      def self.run: (args: Array[String]) -> void
-
       attr_reader db: string
       attr_reader js: string
       attr_reader subservices: string
+      attr_reader volumes: string
+      attr_reader show: bool
 
       def initialize: (args: Hash[Symbol, bool]) -> void
-
-      def parse: (args: Array[String]) -> void
-
-      def run: -> void
 
       private
 

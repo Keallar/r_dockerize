@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+module RDockerize
+  module Commands
+    class Save < Base
+
+      private
+
+      def check_template: -> untyped
+
+      def save_template: -> untyped
+    end
+  end
+end

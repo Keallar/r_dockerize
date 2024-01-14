@@ -9,7 +9,8 @@ module RDockerize
       "compose" => "RDockerize::Commands::Dco",
       "docker-compose" => "RDockerize::Commands::Dco",
       "docker" => "RDockerize::Commands::Docker",
-      "dockerize" => "RDockerize::Commands::Dockerize"
+      "dockerize" => "RDockerize::Commands::Dockerize",
+      "save" => "RDockerize::Commands::Save"
     }.freeze
 
     def initialize
@@ -26,9 +27,9 @@ module RDockerize
       begin
         Object.const_get(COMMANDS[command]).run(args)
       rescue TypeError, KeyError
-        raise RDockerize::Errors::CommandNotFound, command: command, av_commands: COMMANDS.keys.join(", ")
+        raise Errors::CommandNotFound, command: command, av_commands: COMMANDS.keys.join(", ")
       rescue StandardError => e
-        if RDockerize::DEBUG
+        if DEBUG
           $stdout.puts e.message
           $stdout.puts e.backtrace.join("\n")
         end
@@ -42,7 +43,7 @@ module RDockerize
         opts.banner = banner
 
         opts.on("-v", "--version", "Print the version number, then exit") do
-          $stdout.puts "v#{RDockerize::VERSION}"
+          $stdout.puts "v#{VERSION}"
           exit 0
         end
 
@@ -85,6 +86,7 @@ module RDockerize
           dockerize                          Create both files (Dockerfile and docker-compose.yml)
           dco (or compose, docker-compose)   Create docker-compose.yml file
           docker                             Create Dockerfile
+          save                               Save user template for Dockerfile or docker-compose.yml
       USAGE
     end
   end

@@ -6,6 +6,8 @@ module RDockerize
       attr_reader js_np: string
       attr_reader db: string
       attr_reader rv: string
+      attr_reader show: bool
+      attr_reader user_temp: bool
 
       def self.run: (args: Array[String]) -> void
 
