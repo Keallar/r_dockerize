@@ -3,11 +3,13 @@
 module RDockerize
   module Commands
     class Docker < Base
+      @standard: bool
+      @show: bool
+      @user_temp: bool
+
       attr_reader js_np: string
       attr_reader db: string
       attr_reader rv: string
-      attr_reader show: bool
-      attr_reader user_temp: bool
 
       def self.run: (args: Array[String]) -> void
 

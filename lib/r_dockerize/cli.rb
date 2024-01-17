@@ -22,7 +22,9 @@ module RDockerize
       command = parse_command(args)
 
       puts "COMMAND: #{command}"
-      print_help?(args) unless command
+      print_help? unless command
+
+      args.delete(command)
 
       begin
         Object.const_get(COMMANDS[command]).run(args)
@@ -42,36 +44,30 @@ module RDockerize
       @option_parser ||= OptionParser.new do |opts|
         opts.banner = banner
 
-        opts.on("-v", "--version", "Print the version number, then exit") do
-          $stdout.puts "v#{VERSION}"
+        opts.on("-v", "--version", "Print the version number") do
+          $stdout.puts VERSION
           exit 0
         end
 
         opts.on("-h", "--help", "Print help") do
-          $stdout.puts opts
-          exit 0
+          @print_help = true
         end
       end
     end
 
-    def print_help?(args)
-      c_args = args.clone
-      c_args << "-h"
-      begin
-        option_parser.parse!(c_args)
-      rescue OptionParser::InvalidOption => e
-        $stdout.puts e.message
-      end
+    def print_help?
+      $stdout.puts option_parser.banner
+      exit(0)
     end
 
     def parse_command(args)
-      c_args = args.clone
+      d_args = args.dup
       unknown_args = []
       begin
-        command, = option_parser.permute(c_args)
+        command, = option_parser.permute!(d_args)
       rescue OptionParser::InvalidOption => e
         unknown_args += e.args
-        c_args -= unknown_args
+        d_args -= unknown_args
         retry
       end
       command
@@ -80,13 +76,17 @@ module RDockerize
     def banner
       <<~USAGE
         Usage:
-          rdockerize <command> [options]
+            rdockerize <command> [options]
 
         Commands:
-          dockerize                          Create both files (Dockerfile and docker-compose.yml)
-          dco (or compose, docker-compose)   Create docker-compose.yml file
-          docker                             Create Dockerfile
-          save                               Save user template for Dockerfile or docker-compose.yml
+            dockerize                          Create both files (Dockerfile and docker-compose.yml)
+            dco (or compose, docker-compose)   Create docker-compose.yml file
+            docker                             Create Dockerfile
+            save                               Save user template for Dockerfile or docker-compose.yml
+
+        Options:
+            -v [--version]                     Print the version number
+            -h [--help]                        Print help
       USAGE
     end
   end

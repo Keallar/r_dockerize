@@ -25,3 +25,6 @@ Style/Documentation:
 
 Metrics/AbcSize:
   Max: 30
+
+Security/YAMLLoad:
+  Enabled: false

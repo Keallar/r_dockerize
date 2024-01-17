@@ -36,7 +36,17 @@
 
         RUN bundle install
       :user_template: kek
-      :template: FROM ruby:%{ruby_version}
+      :template: |
+        FROM ruby:%{ruby_version}
+        
+        RUN apt-get update -qq
+        
+        ENV APP_APTH=/usr/src
+        WORKDIR $APP_APTH
+
+        COPY ./ $APP_PATH
+        %{db_option}%{js_np_option}
+        RUN bundle install
       :db:
         :sqlite: ''
       :js_pm:

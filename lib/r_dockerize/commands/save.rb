@@ -11,12 +11,15 @@ module RDockerize
         parser = opt_parser do |opts|
           opts.banner = banner
 
-          opts.on("-d", "--dockerfile=DOCKERFILE") do |val|
-            save_template(val)
+          opts.on("-d", "--dockerfile=DOCKERFILE_PATH", "Path to Dockerfile") do |val|
+            docker_file?(val)
+            save_template(val, :docker)
             $stdout.puts val
           end
 
-          opts.on("-c", "--compose=COMPOSEFILE") do |val|
+          opts.on("-c", "--compose=COMPOSEFILE_PATH", "Path to docker-compose file") do |val|
+            docker_file?(val)
+            save_template(val, :dco)
             $stdout.puts val
           end
         end
@@ -33,26 +36,28 @@ module RDockerize
       def banner
         <<~USAGE
           Usage:
-            rdockerize save [options]
+              rdockerize save [options]
 
           Options:
-            -d [--dockerfile]
-            -c [--compose]
+              -d [--dockerfile=DOCKERFILE_PATH]  Path to Dockerfile
+              -c [--compose=COMPOSEFILE_PATH]    Path to docker-compose file
         USAGE
       end
 
       private
 
-      def save_template(path)
+      def save_template(path, type)
         user_data = File.read(File.expand_path(path))
         i18n_path = I18n.load_path.last
         yaml_hash = YAML.load(File.read(i18n_path), symbolize_names: true)
-        yaml_hash[:en][:r_dockerize][:docker][:user_template] = user_data
+        yaml_hash[:en][:r_dockerize][type][:user_template] = user_data
         File.write(i18n_path, yaml_hash.to_yaml)
       end
 
       # Validate filename of template
-      def check_template; end
+      def docker_file?(path)
+        raise StandardError unless File.basename(path).downcase.include?("docker")
+      end
     end
   end
 end

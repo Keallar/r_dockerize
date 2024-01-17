@@ -3,7 +3,7 @@
 module RDockerize
   module Commands
     class Docker < Base
-      attr_reader :db, :js_np, :rv, :user_temp, :show
+      attr_reader :db, :js_np, :rv
 
       def self.run(args)
         new(args).run
@@ -12,6 +12,7 @@ module RDockerize
       def initialize(args)
         @user_temp = false
         @show = false
+        @standard = false
         super(args)
       end
 
@@ -30,6 +31,11 @@ module RDockerize
           opts.on("-u", "--user") do
             @user_temp = true
             $stdout.puts "User template"
+          end
+
+          opts.on("--standard") do
+            @standard = true
+            $stdout.puts "Standard template"
           end
 
           opts.on("-j", "--javascript=JAVASCRIPT") do |val|
@@ -64,13 +70,14 @@ module RDockerize
       def banner
         <<~USAGE
           Usage:
-            rdockerize docker [options]
+              rdockerize docker [options]
 
           Options:
-            -j [--javascript=JAVASCRIPT]
-            -r [--ruby_version=RUBY_VERSION]
-            -d [--database=DATABASE]
-            -u [--user]
+              -j [--javascript=JAVASCRIPT]      Javascript
+              -r [--ruby_version=RUBY_VERSION]  Set ruby version
+              -d [--database=DATABASE]          Set database
+              -u [--user]                       User template
+              --standard                        Standard template
         USAGE
       end
 
@@ -96,10 +103,10 @@ module RDockerize
 
       def prepare_text
         return I18n.t("#{BASE_KEY}.docker.user_template") if @user_temp
-        return I18n.t("#{BASE_KEY}.docker.standard", ruby_version: @rv) unless @db && @js_np
+        return I18n.t("#{BASE_KEY}.docker.standard", ruby_version: @rv) if @standard
 
-        js_np_text = I18n.t("#{BASE_KEY}.docker.js_np.#{@js_np}")
-        db_text = I18n.t("#{BASE_KEY}.docker.db.#{@db}")
+        js_np_text = I18n.t("#{BASE_KEY}.docker.js_np.#{@js_np}") if @js_np
+        db_text = I18n.t("#{BASE_KEY}.docker.db.#{@db}") if @db
 
         I18n.t("#{BASE_KEY}.docker.template",
                ruby_version: @rv, js_np_option: js_np_text, db_option: db_text)
