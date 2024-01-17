@@ -11,13 +11,13 @@ module RDockerize
         parser = opt_parser do |opts|
           opts.banner = banner
 
-          opts.on("-d", "--dockerfile=DOCKERFILE_PATH", "Path to Dockerfile") do |val|
+          opts.on("-d", "--dockerfile=DOCKERFILE_PATH", "# Path to Dockerfile (default)") do |val|
             docker_file?(val)
             save_template(val, :docker)
             $stdout.puts val
           end
 
-          opts.on("-c", "--compose=COMPOSEFILE_PATH", "Path to docker-compose file") do |val|
+          opts.on("-c", "--compose=COMPOSEFILE_PATH", "# Path to docker-compose file") do |val|
             docker_file?(val)
             save_template(val, :dco)
             $stdout.puts val
@@ -39,8 +39,6 @@ module RDockerize
               rdockerize save [options]
 
           Options:
-              -d [--dockerfile=DOCKERFILE_PATH]  Path to Dockerfile
-              -c [--compose=COMPOSEFILE_PATH]    Path to docker-compose file
         USAGE
       end
 

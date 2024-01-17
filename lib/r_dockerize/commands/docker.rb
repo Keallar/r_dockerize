@@ -23,34 +23,34 @@ module RDockerize
         parser = opt_parser do |opts|
           opts.banner = banner
 
-          opts.on("-s", "--show") do
+          opts.on("-s", "--show", "# Show assembled dockerfile") do
             @show = true
             $stdout.puts "Show"
           end
 
-          opts.on("-u", "--user") do
+          opts.on("-u", "--user", "# Use saved user's template") do
             @user_temp = true
             $stdout.puts "User template"
           end
 
-          opts.on("--standard") do
-            @standard = true
-            $stdout.puts "Standard template"
-          end
-
-          opts.on("-j", "--javascript=JAVASCRIPT") do |val|
+          opts.on("-j", "--javascript=JAVASCRIPT", "# Choose JavaScript approach [options: importmap, webpack, esbuild]") do |val|
             prepare_js_np(val)
             $stdout.puts @js
           end
 
-          opts.on("-r", "--ruby_version=RUBY_VERSION") do |val|
+          opts.on("-r", "--ruby_version=RUBY_VERSION", "# Choose version of ruby") do |val|
             @rv = val
             $stdout.puts @rv
           end
 
-          opts.on("-d", "--database=DATABASE") do |val|
+          opts.on("-d", "--database=DATABASE", "# Choose database [options: mysql, pg, sqlite]") do |val|
             prepare_db(val)
             $stdout.puts @db
+          end
+
+          opts.on("--standard", "# Standard template") do
+            @standard = true
+            $stdout.puts "Standard template"
           end
         end
 
@@ -73,11 +73,6 @@ module RDockerize
               rdockerize docker [options]
 
           Options:
-              -j [--javascript=JAVASCRIPT]      Javascript
-              -r [--ruby_version=RUBY_VERSION]  Set ruby version
-              -d [--database=DATABASE]          Set database
-              -u [--user]                       User template
-              --standard                        Standard template
         USAGE
       end
 

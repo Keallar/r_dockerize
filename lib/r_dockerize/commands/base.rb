@@ -30,8 +30,8 @@ module RDockerize
           yield opts if block_given?
 
           opts.on("-h", "--help", "# Print help for command") do
-            $stdout.puts banner
-            exit(0)
+            $stdout.puts opts.help
+            exit 0
           end
         end
       end

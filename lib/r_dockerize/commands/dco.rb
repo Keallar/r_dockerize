@@ -61,10 +61,6 @@ module RDockerize
             rdockerize docker-compose [options]
 
           Options:
-            -j [--javascript=JAVASCRIPT]
-            -r [--ruby_version=RUBY_VERSION]
-            -b [--subservices=SUBSERVICES]
-            -s [--show]
         USAGE
       end
 
