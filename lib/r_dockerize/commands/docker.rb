@@ -33,7 +33,7 @@ module RDockerize
             $stdout.puts "User template"
           end
 
-          opts.on("-j", "--javascript=JAVASCRIPT", "# Choose JavaScript approach [options: importmap, webpack, esbuild]") do |val|
+          opts.on("-j", "--javascript=JAVASCRIPT", "# Choose JavaScript approach [options: npm, yarn]") do |val|
             prepare_js_np(val)
             $stdout.puts @js
           end
@@ -43,7 +43,7 @@ module RDockerize
             $stdout.puts @rv
           end
 
-          opts.on("-d", "--database=DATABASE", "# Choose database [options: mysql, pg, sqlite]") do |val|
+          opts.on("-d", "--database=DATABASE", "# Choose database [options: sqlite]") do |val|
             prepare_db(val)
             $stdout.puts @db
           end

@@ -12,7 +12,7 @@ module RDockerize
 
   JAVASCRIPT = %w[importmap esbuild webpack].freeze
 
-  DATABASE = %w[pg postgresql mysql mongodb].freeze
+  DATABASE = %w[pg postgresql mysql mongodb sqlite].freeze
 
   JAVASCRIPT_PM = %w[yarn npm].freeze
 
