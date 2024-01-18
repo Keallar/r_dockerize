@@ -12,7 +12,8 @@ module RDockerize
 
       def initialize(args)
         @show = false
-        super
+        @subservices = []
+        super(args)
       end
 
       def parse(args)
@@ -21,21 +22,22 @@ module RDockerize
         parser = opt_parser do |opts|
           opts.banner = banner
 
-          opts.on("-s", "--show") do
+          opts.on("-s", "--show", "# Show assembled docker-compose file") do
             @show = true
+            $stdout.puts "Show"
           end
 
-          opts.on("-j", "--javascript=JAVASCRIPT") do |val|
-            prepare_js(val)
-            $stdout.puts @js
-          end
+          # opts.on("-j", "--javascript=JAVASCRIPT", "# Choose JavaScript approach [options: importmap, esbuild]") do |val|
+          #   prepare_js(val)
+          #   $stdout.puts @js
+          # end
 
-          opts.on("-d", "--database=DATABASE") do |val|
+          opts.on("-d", "--database=DATABASE", "# Choose database [options: sqlite]") do |val|
             prepare_db(val)
             $stdout.puts @db
           end
 
-          opts.on("-b", "--subservices=SUBSERVICES") do |val|
+          opts.on("-b", "--subservices=SUBSERVICES", "# Choose subservices [options: redis rabbitmq sidekiq]") do |val|
             prepare_subservices(val)
             $stdout.puts @subservices
           end
@@ -66,14 +68,14 @@ module RDockerize
 
       private
 
-      def prepare_js(option)
-        unless JAVASCRIPT.include?(option)
-          raise RDockerize::Errors::JsNotFound, option: option,
-                                                av_options: RDockerize::JAVASCRIPT.join(" ")
-        end
-
-        @js = option
-      end
+      # def prepare_js(option)
+      #   unless JAVASCRIPT.include?(option)
+      #     raise RDockerize::Errors::JsNotFound, option: option,
+      #                                           av_options: RDockerize::JAVASCRIPT.join(" ")
+      #   end
+      #
+      #   @js = option
+      # end
 
       def prepare_db(option)
         unless DATABASE.include?(option)
@@ -90,20 +92,19 @@ module RDockerize
                                                         av_options: SUBSERVICES.join(" ")
         end
 
-        @subservices = option
+        @subservices << option
       end
 
       def prepare_text
         js_text = I18n.t("#{BASE_KEY}.dco.js.#{@js}") if js_text
         db_text = I18n.t("#{BASE_KEY}.dco.db.#{@db}")
         subservice_text = if @subservices
-                            @subservices.each_with_object("") do |service, str|
-                              str << I18n.t("#{BASE_KEY}.dco.subservices.#{service}")
+                            @subservices.each_with_object([]) do |service, str_arr|
+                              str_arr << "#{I18n.t("#{BASE_KEY}.dco.subservices.#{service.dup}")}\n"
                             end
                           else
                             ""
                           end
-
         volumes_text = "volumes:\n  #{@db}:"
 
         I18n.t(

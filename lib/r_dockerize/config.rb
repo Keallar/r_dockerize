@@ -10,7 +10,7 @@ module RDockerize
 
   STANDARD_COMPOSE_VERSION = 3.5
 
-  JAVASCRIPT = %w[importmap esbuild webpack].freeze
+  # JAVASCRIPT = %w[importmap esbuild webpack].freeze
 
   DATABASE = %w[pg postgresql mysql mongodb sqlite].freeze
 

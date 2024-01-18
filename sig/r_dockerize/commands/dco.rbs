@@ -5,7 +5,7 @@ module RDockerize
     class Dco < Base
       attr_reader db: string
       attr_reader js: string
-      attr_reader subservices: string
+      attr_reader subservices: array[string]
       attr_reader volumes: string
       attr_reader show: bool
 
