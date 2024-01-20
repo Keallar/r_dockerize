@@ -4,7 +4,7 @@ module RDockerize
   module Commands
     # rubocop disable:Style/IfUnlessModifier
     class Dco < Base
-      attr_reader :db, :js, :subservices, :volumes, :show
+      attr_reader :db, :js, :subservices, :volumes
 
       def self.run(args)
         new(args).run
@@ -13,9 +13,11 @@ module RDockerize
       def initialize(args)
         @show = false
         @subservices = []
+        @user_temp = false
         super(args)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def parse(args)
         @db = "sqlite"
 
@@ -27,10 +29,10 @@ module RDockerize
             $stdout.puts "Show"
           end
 
-          # opts.on("-j", "--javascript=JAVASCRIPT", "# Choose JavaScript approach [options: importmap, esbuild]") do |val|
-          #   prepare_js(val)
-          #   $stdout.puts @js
-          # end
+          opts.on("-u", "--user", "# Use saved user's template") do
+            @user_temp = true
+            $stdout.puts "User template"
+          end
 
           opts.on("-d", "--database=DATABASE", "# Choose database [options: sqlite]") do |val|
             prepare_db(val)
@@ -45,6 +47,7 @@ module RDockerize
 
         parser.parse!(args)
       end
+      # rubocop:enable Metrics/MethodLength
 
       def run
         text = prepare_text
@@ -68,15 +71,6 @@ module RDockerize
 
       private
 
-      # def prepare_js(option)
-      #   unless JAVASCRIPT.include?(option)
-      #     raise RDockerize::Errors::JsNotFound, option: option,
-      #                                           av_options: RDockerize::JAVASCRIPT.join(" ")
-      #   end
-      #
-      #   @js = option
-      # end
-
       def prepare_db(option)
         unless DATABASE.include?(option)
           raise RDockerize::Errors::DbNotFound, option: option,
@@ -96,6 +90,8 @@ module RDockerize
       end
 
       def prepare_text
+        return I18n.t("#{BASE_KEY}.dco.user_template") if @user_temp
+
         js_text = I18n.t("#{BASE_KEY}.dco.js.#{@js}") if js_text
         db_text = I18n.t("#{BASE_KEY}.dco.db.#{@db}")
         subservice_text = if @subservices

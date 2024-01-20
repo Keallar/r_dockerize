@@ -45,7 +45,7 @@
         WORKDIR $APP_APTH
 
         COPY ./ $APP_PATH
-        %{db_option}%{js_np_option}
+        %{db_option}%{js_pm_option}
         RUN bundle install
       :db:
         :sqlite: |
@@ -53,7 +53,7 @@
             apt-get install -y sqlite3 libsqlite3-dev && \
             apt-get clean && \
             rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-      :js_np:
+      :js_pm:
         :yarn: |
           RUN apt-get update && apt-get install -y \
             curl \
@@ -91,7 +91,7 @@
           %{subservices_option}
 
         %{volumes_option}
-      :user_template: ''
+      :user_template: docker-compose
       :db:
         :postgresql: |-
             postgresql:

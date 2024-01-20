@@ -2,6 +2,5 @@
 
 module RDockerize
   class Base
-
   end
 end

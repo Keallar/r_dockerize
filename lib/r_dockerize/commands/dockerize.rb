@@ -7,13 +7,18 @@ module RDockerize
         new(args)
       end
 
-      def run
-        nil
-      end
-
       def parse(args)
         RDockerize::Commands::Dco.run(args)
         RDockerize::Commands::Docker.run(args)
+      end
+
+      protected
+
+      def banner
+        <<~USAGE
+          Usage:
+              rdockerize dockerize
+        USAGE
       end
     end
   end

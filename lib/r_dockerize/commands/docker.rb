@@ -3,7 +3,7 @@
 module RDockerize
   module Commands
     class Docker < Base
-      attr_reader :db, :js_np, :rv
+      attr_reader :db, :js_pm, :rv
 
       def self.run(args)
         new(args).run
@@ -34,7 +34,7 @@ module RDockerize
           end
 
           opts.on("-j", "--javascript=JAVASCRIPT", "# Choose JavaScript approach [options: npm, yarn]") do |val|
-            prepare_js_np(val)
+            prepare_js_pm(val)
             $stdout.puts @js
           end
 
@@ -78,13 +78,13 @@ module RDockerize
 
       private
 
-      def prepare_js_np(option)
+      def prepare_js_pm(option)
         unless JAVASCRIPT_PM.include?(option)
           raise RDockerize::Errors::JsNotFound, option: option,
                                                 av_options: JAVASCRIPT_PM.join(" ")
         end
 
-        @js_np = option
+        @js_pm = option
       end
 
       def prepare_db(option)
@@ -100,11 +100,11 @@ module RDockerize
         return I18n.t("#{BASE_KEY}.docker.user_template") if @user_temp
         return I18n.t("#{BASE_KEY}.docker.standard", ruby_version: @rv) if @standard
 
-        js_np_text = I18n.t("#{BASE_KEY}.docker.js_np.#{@js_np}") if @js_np
+        js_pm_text = I18n.t("#{BASE_KEY}.docker.js_pm.#{@js_pm}") if @js_pm
         db_text = I18n.t("#{BASE_KEY}.docker.db.#{@db}") if @db
 
         I18n.t("#{BASE_KEY}.docker.template",
-               ruby_version: @rv, js_np_option: js_np_text, db_option: db_text)
+               ruby_version: @rv, js_pm_option: js_pm_text, db_option: db_text)
       end
     end
   end

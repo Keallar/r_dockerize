@@ -2,6 +2,5 @@
 
 RSpec.describe RDockerize::CLI do
   it "raise" do
-
   end
 end
