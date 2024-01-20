@@ -101,7 +101,7 @@ module RDockerize
         subservice_text = if @subservices
                             @subservices.each_with_object([]) do |service, str_arr|
                               str_arr << "#{I18n.t("#{BASE_KEY}.dco.subservices.#{service.dup}")}\n"
-                            end
+                            end.join(" ")
                           else
                             ""
                           end

@@ -85,72 +85,74 @@
             ports:
               - "3000:3000"
           %{js_option}
+        
           %{db_option}
+        
           %{subservices_option}
 
         %{volumes_option}
       :user_template: ''
       :db:
         :postgresql: |-
-          postgresql:
-            image: postgres
-            environment:
-              - POSTGRES_USER=user
-              - POSTGRES_PASSWORD=pass
-            volumes:
-              - postgresql:/var/lib/postgresql/data
-            ports:
-              - "5432:5432"
+            postgresql:
+                image: postgres
+                environment:
+                  - POSTGRES_USER=user
+                  - POSTGRES_PASSWORD=pass
+                volumes:
+                  - postgresql:/var/lib/postgresql/data
+                ports:
+                  - "5432:5432"
         :mysql: |-
-          mysql:
-            image: mysql:5.7
-            restart: always
-            environment:
-               - MYSQL_ROOT_PASSWORD=pass
-               - MYSQL_DATABASE=app
-               - MYSQL_USE= user
-               - MYSQL_PASSWORD=pass
-            ports:
-                - "3307:3306"
+            mysql:
+                image: mysql:5.7
+                restart: always
+                environment:
+                   - MYSQL_ROOT_PASSWORD=pass
+                   - MYSQL_DATABASE=app
+                   - MYSQL_USE= user
+                   - MYSQL_PASSWORD=pass
+                ports:
+                    - "3307:3306"
         :mongodb: |-
-          mongo:
-            image: "mongo:4.2.8"
-            environment:
-              MONGO_INITDB_ROOT_USERNAME=user
-              MONGO_INITDB_ROOT_PASSWORD=pass
-            ports:
-              - "27017:27017"
-            volumes:
-              - "mongodb:/var/lib/mongodb/data"
+            mongo:
+                image: "mongo:4.2.8"
+                environment:
+                  - MONGO_INITDB_ROOT_USERNAME=user
+                  - MONGO_INITDB_ROOT_PASSWORD=pass
+                ports:
+                  - "27017:27017"
+                volumes:
+                  - "mongodb:/var/lib/mongodb/data"
         :sqlite: |-
-          sqlite:
-            image: nouchka/sqlite3:latest
-            volumes:
-              - db:/root/db
-            stdin_open: true
-            tty: true
+            sqlite:
+                image: nouchka/sqlite3:latest
+                volumes:
+                  - db:/root/db
+                stdin_open: true
+                tty: true
       :subservices:
         :redis: |-
-          redis:
-            image: redis:alpine
-            expose:
-              - 6379
-            volumes:
-              - redis:/data
+            redis:
+                image: redis:alpine
+                expose:
+                  - 6379
+                volumes:
+                  - redis:/data
 
         :rabbitmq: |-
-          rabbitmq:
-            platform: linux/x86_64
-            image: rabbitmq:management-alpine
-            command: rabbitmq-server
-            ports:
-              - 15672:15672
-            expose:
-              - 5672
+            rabbitmq:
+                platform: linux/x86_64
+                image: rabbitmq:management-alpine
+                command: rabbitmq-server
+                ports:
+                  - 15672:15672
+                expose:
+                  - 5672
 
         :sidekiq: |-
-          sidekiq:
-            build: .
-            command: bundle exec sidekiq
-            volumes: 
-              - '.:/usr/src'
+            sidekiq:
+                build: .
+                command: bundle exec sidekiq
+                volumes: 
+                  - '.:/usr/src'
