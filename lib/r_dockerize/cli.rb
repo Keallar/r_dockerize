@@ -56,14 +56,18 @@ module RDockerize
 
     def print_help?
       $stdout.puts option_parser.help
-      exit(0)
+      exit 0
     end
 
     def parse_command(args)
       c_args = args.clone
       unknown_args = []
       begin
-        c_args.order!
+        ordered_args = option_parser.order(c_args)
+        if ordered_args.empty?
+          option_parser.parse!(c_args)
+          return
+        end
         command = c_args.shift
       rescue OptionParser::InvalidOption => e
         unknown_args += e.args

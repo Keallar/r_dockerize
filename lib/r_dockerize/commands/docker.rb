@@ -38,7 +38,7 @@ module RDockerize
             $stdout.puts @js
           end
 
-          opts.on("-r", "--ruby_version=RUBY_VERSION", "# Choose version of ruby") do |val|
+          opts.on("-r", "--ruby=RUBY_VERSION", "# Choose version of ruby") do |val|
             @rv = val
             $stdout.puts @rv
           end

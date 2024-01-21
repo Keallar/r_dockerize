@@ -2,7 +2,7 @@
 
 require "open3"
 
-class CommandHelper
+module CommandHelper
   def run_command(command, chdir: nil, should_fail: false, env: {}, input: nil)
     output, error, status =
       Open3.capture3(
@@ -16,7 +16,7 @@ class CommandHelper
       puts "\n\nCOMMAND:\n#{command}\n\nOUTPUT:\n#{output}\nERROR:\n#{error}\n"
     end
 
-    # status.success?.should == true unless should_fail
+    expect(status.success?).to be_truthy unless should_fail
 
     yield status, output, error if block_given?
   end

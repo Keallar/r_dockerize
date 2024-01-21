@@ -28,3 +28,6 @@ Metrics/AbcSize:
 
 Security/YAMLLoad:
   Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Max: 10

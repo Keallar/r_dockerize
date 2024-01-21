@@ -35,5 +35,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "i18n", "~> 1.14.1"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
-  spec.add_development_dependency "rubocop"
 end
