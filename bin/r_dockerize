@@ -2,9 +2,10 @@
 # frozen_string_literal: true
 
 lib_path = File.expand_path("../lib", __dir__)
-$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include? lib_path
+$:.unshift(lib_path) unless $:.include? lib_path
 
 require "r_dockerize"
+require "bundler/setup"
 
 begin
   cli = RDockerize::CLI.new

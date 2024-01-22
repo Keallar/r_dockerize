@@ -15,7 +15,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.after(:each) do
+  config.after do
     root = File.expand_path("..", __dir__)
     dockerfile_path = File.join(root, "Dockerfile")
     dco_path = File.join(root, "docker-compose.yml")

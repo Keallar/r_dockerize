@@ -7,10 +7,13 @@
           %{av_commands}'
         :js_not_found: 'Non available js option: %{option}. Available options: %{av_options}'
         :db_not_found: 'Non available db option: %{option}. Available options: %{av_options}'
-        :subservice_not_found: 'Non available subservices option: %{option}. Available
+        :subservice_not_found: 'Non available subservice option: %{option}. Available
           options: %{av_options}'
+        :docker_filename_error: Error in filename to save template. Use filename containing
+          "docker"
     :docker:
       :standard: |
+        # Standard Dockerfile
         FROM ruby:%{ruby_version}
 
         RUN apt-get update -qq && apt-get install -y postgresql-client
@@ -37,6 +40,7 @@
         RUN bundle install
       :user_template: ''
       :template: |
+        # Template Dockerfile
         FROM ruby:%{ruby_version}
 
         RUN apt-get update -qq
@@ -72,6 +76,7 @@
             apt-get update && apt-get install -y nodejs
     :dco:
       :template: |-
+        # Standard template
         version: '3.5'
 
         services:

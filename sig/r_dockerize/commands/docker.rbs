@@ -19,7 +19,7 @@ module RDockerize
 
       private
 
-      def prepare_js_np: (string) -> void
+      def prepare_js_pm: (string) -> void
 
       def prepare_db: (string) -> void
 

@@ -8,19 +8,23 @@ module RDockerize
       end
 
       def parse(args)
+        raise OptionParser::InvalidOption if args.empty?
+
+        exec_opt = lambda do |val, type|
+          docker_file?(val)
+          save_template(val, type)
+          $stdout.puts val
+        end
+
         parser = opt_parser do |opts|
           opts.banner = banner
 
           opts.on("-d", "--dockerfile=DOCKERFILE_PATH", "# Path to Dockerfile (default)") do |val|
-            docker_file?(val)
-            save_template(val, :docker)
-            $stdout.puts val
+            exec_opt.call(val, :docker)
           end
 
           opts.on("-c", "--compose=COMPOSEFILE_PATH", "# Path to docker-compose file") do |val|
-            docker_file?(val)
-            save_template(val, :dco)
-            $stdout.puts val
+            exec_opt.call(val, :dco)
           end
         end
 
@@ -54,7 +58,7 @@ module RDockerize
 
       # Validate filename of template
       def docker_file?(path)
-        raise StandardError unless File.basename(path).downcase.include?("docker")
+        raise Errors::DockerFilenameError unless File.basename(path).downcase.include?("docker")
       end
     end
   end

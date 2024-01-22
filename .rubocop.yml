@@ -31,3 +31,18 @@ Security/YAMLLoad:
 
 Metrics/CyclomaticComplexity:
   Max: 10
+
+RSpec/MultipleExpectations:
+  Max: 3
+
+RSpec/NestedGroups:
+  Max: 6
+
+RSpec/DescribeClass:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/PredicateMatcher:
+  Enabled: false

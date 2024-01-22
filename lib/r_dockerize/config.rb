@@ -6,7 +6,7 @@ require "yaml"
 module RDockerize
   VERSION = "0.1.0"
 
-  DEBUG = true
+  DEBUG = false
 
   STANDARD_COMPOSE_VERSION = 3.5
 

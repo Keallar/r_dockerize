@@ -25,32 +25,26 @@ module RDockerize
 
           opts.on("-s", "--show", "# Show assembled dockerfile") do
             @show = true
-            $stdout.puts "Show"
           end
 
           opts.on("-u", "--user", "# Use saved user's template") do
             @user_temp = true
-            $stdout.puts "User template"
           end
 
           opts.on("-j", "--javascript=JAVASCRIPT", "# Choose JavaScript approach [options: npm, yarn]") do |val|
             prepare_js_pm(val)
-            $stdout.puts @js
           end
 
           opts.on("-r", "--ruby=RUBY_VERSION", "# Choose version of ruby") do |val|
             @rv = val
-            $stdout.puts @rv
           end
 
           opts.on("-d", "--database=DATABASE", "# Choose database [options: sqlite]") do |val|
             prepare_db(val)
-            $stdout.puts @db
           end
 
           opts.on("--standard", "# Standard template") do
             @standard = true
-            $stdout.puts "Standard template"
           end
         end
 
@@ -80,18 +74,14 @@ module RDockerize
 
       def prepare_js_pm(option)
         unless JAVASCRIPT_PM.include?(option)
-          raise RDockerize::Errors::JsNotFound, option: option,
-                                                av_options: JAVASCRIPT_PM.join(" ")
+          raise Errors::JsNotFound, option: option, av_options: JAVASCRIPT_PM.join(" ")
         end
 
         @js_pm = option
       end
 
       def prepare_db(option)
-        unless DATABASE.include?(option)
-          raise RDockerize::Errors::DbNotFound, option: option,
-                                                av_options: DATABASE.join(" ")
-        end
+        raise Errors::DbNotFound, option: option, av_options: DATABASE.join(" ") unless DATABASE.include?(option)
 
         @db = option
       end

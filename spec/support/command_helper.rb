@@ -24,4 +24,8 @@ module CommandHelper
   def run_rdockerize(command, **options, &block)
     run_command("ruby #{File.join(__dir__, "../../bin/rdockerize")} #{command}", **options, &block)
   end
+
+  def run_rdockerize_without_subcommand(**options, &block)
+    run_command("ruby #{File.join(__dir__, "../../bin/rdockerize")}", **options, &block)
+  end
 end

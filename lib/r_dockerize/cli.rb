@@ -34,6 +34,7 @@ module RDockerize
           $stdout.puts e.message
           $stdout.puts e.backtrace.join("\n")
         end
+        raise e
       end
     end
 

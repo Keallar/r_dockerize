@@ -17,7 +17,6 @@ module RDockerize
         super(args)
       end
 
-      # rubocop:disable Metrics/MethodLength
       def parse(args)
         @db = "sqlite"
 
@@ -26,28 +25,23 @@ module RDockerize
 
           opts.on("-s", "--show", "# Show assembled docker-compose file") do
             @show = true
-            $stdout.puts "Show"
           end
 
           opts.on("-u", "--user", "# Use saved user's template") do
             @user_temp = true
-            $stdout.puts "User template"
           end
 
           opts.on("-d", "--database=DATABASE", "# Choose database [options: sqlite]") do |val|
             prepare_db(val)
-            $stdout.puts @db
           end
 
-          opts.on("-b", "--subservices=SUBSERVICES", "# Choose subservices [options: redis rabbitmq sidekiq]") do |val|
+          opts.on("-b", "--subservice=SUBSERVICE", "# Choose subservice [options: redis rabbitmq sidekiq]") do |val|
             prepare_subservices(val)
-            $stdout.puts @subservices
           end
         end
 
         parser.parse!(args)
       end
-      # rubocop:enable Metrics/MethodLength
 
       def run
         text = prepare_text
