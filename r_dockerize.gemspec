@@ -8,13 +8,11 @@ Gem::Specification.new do |spec|
   spec.authors = ["Keallar"]
   spec.email = ["zlysanskiy@gmail.com"]
 
-  spec.summary = "Write a short summary, because RubyGems requires one."
-  spec.description = "Write a longer description or delete this line."
+  spec.summary = "CLI app for creating ruby and rails Dockerfile and docker-compose.yml."
+  spec.description = "CLI app for creating ruby and rails Dockerfile and docker-compose.yml"
   spec.homepage = "https://github.com/Keallar/r_dockerize"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
-
-  spec.metadata["allowed_push_host"] = "Set to your gem server 'https://example.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage

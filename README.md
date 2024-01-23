@@ -1,32 +1,73 @@
-# RDockerize
+# r_dockerize
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/r_dockerize`. To experiment with that code, run `bin/console` for an interactive prompt.
+ `r_dockerize` is a tool for generating ruby and rails Dockerfile and docker-compose.yml
 
-TODO: Delete this and the text above, and describe your gem
+## Requirements
+
+* Ruby 2.6.0+
 
 ## Installation
 
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add r_dockerize
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install r_dockerize
+```bash
+bundle install r_dockerize
+```
+...or add the following to your `Gemfile` and run `bundle install`:
+```
+gem 'r_dockerize', require: false
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+This gem provides a command-line interface which can be run like so:
+
+1. Run `r_dockerize <command> [options]` if gem installed in system
+2. Run `bundle exec r_dockerize <command> [options]` if gem installed in your Gemfile
+
+### Available commands
+1. `r_dockerize docker [options]` - for create Dockerfile
+```bash
+Usage:
+   rdockerize docker [options]
+
+Options:
+    -s, --show                       # Show assembled dockerfile
+    -u, --user                       # Use saved user's template
+    -j, --javascript=JAVASCRIPT      # Choose JavaScript approach [options: npm, yarn]
+    -r, --ruby=RUBY_VERSION          # Choose version of ruby
+    -d, --database=DATABASE          # Choose database [options: sqlite]
+    --standard                       # Standard template
+    -h, --help                       # Print help for command
+```
+2. `r_dockerize dco ` / `compose`/ `docker-compose [options]` - for create docker-compose.yml
+```bash
+Usage:
+  rdockerize dco [options]
+  rdockerize compose [options]
+  rdockerize docker-compose [options]
+
+Options:
+    -s, --show                       # Show assembled docker-compose file
+    -u, --user                       # Use saved user's template
+    -d, --database=DATABASE          # Choose database [options: sqlite]
+    -b, --subservice=SUBSERVICE      # Choose subservice [options: redis rabbitmq sidekiq]
+    -h, --help                       # Print help for command
+
+```
+3. `r_dockerize dockerize` - for create both (Dockerfie and docker-compose.yml)
+```bash
+Usage:
+  rdockerize dockerize
+```
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `gem install r_dockerize`. To release a new version, update the version number in `version.rb`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/r_dockerize.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Keallar/r_dockerize.
 
 ## License
 

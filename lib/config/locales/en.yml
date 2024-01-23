@@ -115,10 +115,10 @@
                 environment:
                    - MYSQL_ROOT_PASSWORD=pass
                    - MYSQL_DATABASE=app
-                   - MYSQL_USE= user
+                   - MYSQL_USE=user
                    - MYSQL_PASSWORD=pass
                 ports:
-                    - "3307:3306"
+                    - "3306:3306"
         :mongodb: |-
             mongo:
                 image: "mongo:4.2.8"
