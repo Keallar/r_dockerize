@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "lib/r_dockerize/config"
+$LOAD_PATH.push(File.expand_path("../lib", __FILE__))
+require "r_dockerize/config"
 
 Gem::Specification.new do |spec|
   spec.name = "r_dockerize"
@@ -29,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Abin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "i18n", "~> 1.14.1"
+  spec.add_dependency "i18n"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
 end

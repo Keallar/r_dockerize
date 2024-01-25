@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     r_dockerize (0.1.0)
-      i18n (~> 1.14.1)
+      i18n
 
 GEM
   remote: https://rubygems.org/
