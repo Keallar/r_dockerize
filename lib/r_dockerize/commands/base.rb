@@ -4,7 +4,9 @@ require "optionparser"
 
 module RDockerize
   module Commands
+    # Abstract class for all commands
     class Base
+      # Base key for access i18n templates
       BASE_KEY = "r_dockerize"
 
       def self.run(args)

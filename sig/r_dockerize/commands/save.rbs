@@ -7,7 +7,7 @@ module RDockerize
       private
 
       def save_template: -> untyped
-      def docker_file?:(string, Symbol) -> (void | Exception)
+      def docker_file?:(string, Symbol) -> (untyped | Exception)
     end
   end
 end

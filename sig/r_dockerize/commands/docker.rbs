@@ -6,10 +6,10 @@ module RDockerize
       @standard: bool
       @show: bool
       @user_temp: bool
-
-      attr_reader js_pm: string
-      attr_reader db: string
-      attr_reader rv: string
+      @js_pm: string
+      @db: string
+      @rv: string
+      @port: string
 
       def self.run: (args: Array[String]) -> void
 

@@ -51,6 +51,7 @@
         COPY ./ $APP_PATH
         %{db_option}%{js_pm_option}
         RUN bundle install
+        %{port}
       :db:
         :sqlite: |
           RUN apt-get update -qq && \

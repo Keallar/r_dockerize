@@ -4,11 +4,9 @@ require "i18n"
 require "yaml"
 
 module RDockerize
-  VERSION = "0.1.0"
-
   DEBUG = false
 
-  STANDARD_COMPOSE_VERSION = 3.5
+  STANDARD_COMPOSE_VERSION = 3.5.freeze
 
   DATABASE = %w[postgresql mysql mongodb sqlite].freeze
 

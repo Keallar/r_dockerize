@@ -96,9 +96,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available db option" do
-              run_rdockerize("dco -d sqlit", should_fail: true) do |_status, output, _error|
+              run_rdockerize("dco -d sqlit", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available db option")
+                expect(error).to include("Non available db option")
               end
             end
           end
@@ -138,9 +138,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available db option" do
-              run_rdockerize("dco --database=sqlit", should_fail: true) do |_status, output, _error|
+              run_rdockerize("dco --database=sqlit", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available db option")
+                expect(error).to include("Non available db option")
               end
             end
           end
@@ -174,9 +174,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available subservices option" do
-              run_rdockerize("dco -b test", should_fail: true) do |_status, output, _error|
+              run_rdockerize("dco -b test", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available subservice option")
+                expect(error).to include("Non available subservice option")
               end
             end
           end
@@ -208,9 +208,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available subservices option" do
-              run_rdockerize("dco --subservice=test", should_fail: true) do |_status, output, _error|
+              run_rdockerize("dco --subservice=test", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available subservice option")
+                expect(error).to include("Non available subservice option")
               end
             end
           end
@@ -284,9 +284,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available db option" do
-              run_rdockerize("compose -d sqlit", should_fail: true) do |_status, output, _error|
+              run_rdockerize("compose -d sqlit", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available db option")
+                expect(error).to include("Non available db option")
               end
             end
           end
@@ -326,9 +326,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available db option" do
-              run_rdockerize("compose --database=sqlit", should_fail: true) do |_status, output, _error|
+              run_rdockerize("compose --database=sqlit", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available db option")
+                expect(error).to include("Non available db option")
               end
             end
           end
@@ -362,9 +362,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available subservices option" do
-              run_rdockerize("compose -b test", should_fail: true) do |_status, output, _error|
+              run_rdockerize("compose -b test", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available subservice option")
+                expect(error).to include("Non available subservice option")
               end
             end
           end
@@ -396,9 +396,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available subservices option" do
-              run_rdockerize("compose --subservice=test", should_fail: true) do |_status, output, _error|
+              run_rdockerize("compose --subservice=test", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available subservice option")
+                expect(error).to include("Non available subservice option")
               end
             end
           end
@@ -472,9 +472,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available db option" do
-              run_rdockerize("docker-compose -d sqlit", should_fail: true) do |_status, output, _error|
+              run_rdockerize("docker-compose -d sqlit", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available db option")
+                expect(error).to include("Non available db option")
               end
             end
           end
@@ -514,9 +514,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available db option" do
-              run_rdockerize("docker-compose --database=sqlit", should_fail: true) do |_status, output, _error|
+              run_rdockerize("docker-compose --database=sqlit", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available db option")
+                expect(error).to include("Non available db option")
               end
             end
           end
@@ -550,9 +550,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available subservices option" do
-              run_rdockerize("docker-compose -b test", should_fail: true) do |_status, output, _error|
+              run_rdockerize("docker-compose -b test", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available subservice option")
+                expect(error).to include("Non available subservice option")
               end
             end
           end
@@ -584,9 +584,9 @@ RSpec.describe "rdockerize dco / compose / docker-compose" do
 
           context "with error" do
             it "Non available subservices option" do
-              run_rdockerize("docker-compose --subservice=test", should_fail: true) do |_status, output, _error|
+              run_rdockerize("docker-compose --subservice=test", should_fail: true) do |_status, _output, error|
                 expect(File.exist?(File.join(File.expand_path("../..", __dir__), "docker-compose.yml"))).to be_falsey
-                expect(output).to include("Non available subservice option")
+                expect(error).to include("Non available subservice option")
               end
             end
           end

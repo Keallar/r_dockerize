@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.push(File.expand_path("../lib", __FILE__))
-require "r_dockerize/config"
+require_relative "lib/r_dockerize/version"
 
 Gem::Specification.new do |spec|
   spec.name = "r_dockerize"

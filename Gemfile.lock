@@ -1,15 +1,15 @@
 PATH
   remote: .
   specs:
-    r_dockerize (0.1.0)
+    r_dockerize (0.1.1)
       i18n
 
 GEM
   remote: https://rubygems.org/
   specs:
-    concurrent-ruby (1.2.2)
+    concurrent-ruby (1.2.3)
     diff-lcs (1.5.0)
-    i18n (1.14.1)
+    i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     rake (13.0.6)
     rspec (3.12.0)
@@ -27,7 +27,9 @@ GEM
     rspec-support (3.12.0)
 
 PLATFORMS
+  ruby
   x86_64-darwin-22
+  x86_64-darwin-23
 
 DEPENDENCIES
   r_dockerize!

@@ -7,9 +7,10 @@ module RDockerize
         new(args)
       end
 
+      # Create docker-compose file and Dockerfile
       def parse(args)
-        RDockerize::Commands::Dco.run(args)
         RDockerize::Commands::Docker.run(args)
+        RDockerize::Commands::Dco.run(args)
       end
 
       protected

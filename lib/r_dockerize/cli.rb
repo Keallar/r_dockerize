@@ -4,9 +4,10 @@ require "optionparser"
 
 module RDockerize
   class CLI
+    # Available commands
     COMMANDS = {
-      "dco" => "RDockerize::Commands::Dco",
-      "compose" => "RDockerize::Commands::Dco",
+      "dco" => "RDockerize::Commands::Dco", # alias for docker-compose
+      "compose" => "RDockerize::Commands::Dco", # alias for docker-compose
       "docker-compose" => "RDockerize::Commands::Dco",
       "docker" => "RDockerize::Commands::Docker",
       "dockerize" => "RDockerize::Commands::Dockerize",
@@ -18,6 +19,7 @@ module RDockerize
       @print_help = false
     end
 
+    # Build necessary class using command's pull of constants
     def run(args = ARGV)
       command = parse_command(args)
 
@@ -40,6 +42,7 @@ module RDockerize
 
     private
 
+    # Initialize base options for r_dockerize command
     def option_parser
       @option_parser ||= OptionParser.new do |opts|
         opts.banner = banner

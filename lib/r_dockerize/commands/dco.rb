@@ -4,8 +4,6 @@ module RDockerize
   module Commands
     # rubocop disable:Style/IfUnlessModifier
     class Dco < Base
-      attr_reader :db, :js, :subservices, :volumes
-
       def self.run(args)
         new(args).run
       end
@@ -18,6 +16,7 @@ module RDockerize
       end
 
       def parse(args)
+        # TODO: sqlite not generated!!!
         @db = "sqlite"
 
         parser = opt_parser do |opts|
@@ -31,11 +30,11 @@ module RDockerize
             @user_temp = true
           end
 
-          opts.on("-d", "--database=DATABASE", "# Choose database [options: sqlite]") do |val|
+          opts.on("-d", "--database=DATABASE", "# Choose database [options: #{DATABASE.join(", ")}]") do |val|
             prepare_db(val)
           end
 
-          opts.on("-b", "--subservice=SUBSERVICE", "# Choose subservice [options: redis rabbitmq sidekiq]") do |val|
+          opts.on("-b", "--subservice=SUBSERVICE", "# Choose subservice [options: #{SUBSERVICES.join(", ")}]") do |val|
             prepare_subservices(val)
           end
         end
@@ -83,6 +82,7 @@ module RDockerize
         @subservices << option
       end
 
+      # Create final text for docker-compose.yml file
       def prepare_text
         return I18n.t("#{BASE_KEY}.dco.user_template") if @user_temp
 

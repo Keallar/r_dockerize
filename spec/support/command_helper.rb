@@ -22,10 +22,10 @@ module CommandHelper
   end
 
   def run_rdockerize(command, **options, &block)
-    run_command("ruby #{File.join(__dir__, "../../bin/rdockerize")} #{command}", **options, &block)
+    run_command("ruby #{File.join(__dir__, "../../bin/r_dockerize")} #{command}", **options, &block)
   end
 
   def run_rdockerize_without_subcommand(**options, &block)
-    run_command("ruby #{File.join(__dir__, "../../bin/rdockerize")}", **options, &block)
+    run_command("ruby #{File.join(__dir__, "../../bin/r_dockerize")}", **options, &block)
   end
 end

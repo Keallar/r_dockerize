@@ -86,9 +86,9 @@ RSpec.describe "rdockerize docker" do
 
         context "with error" do
           it "Non available js option" do
-            run_rdockerize("docker -j n", should_fail: true) do |_status, output, _error|
+            run_rdockerize("docker -j n", should_fail: true) do |_status, _output, error|
               expect(File.exist?(File.join(File.expand_path("../..", __dir__), "Dockerfile"))).to be_falsey
-              expect(output).to include("Non available js option")
+              expect(error).to include("Non available js option")
             end
           end
         end
@@ -111,9 +111,9 @@ RSpec.describe "rdockerize docker" do
 
         context "with error" do
           it "Non available js option" do
-            run_rdockerize("docker --javascript=n", should_fail: true) do |_status, output, _error|
+            run_rdockerize("docker --javascript=n", should_fail: true) do |_status, _output, error|
               expect(File.exist?(File.join(File.expand_path("../..", __dir__), "Dockerfile"))).to be_falsey
-              expect(output).to include("Non available js option")
+              expect(error).to include("Non available js option")
             end
           end
         end
@@ -131,9 +131,9 @@ RSpec.describe "rdockerize docker" do
 
         context "with error" do
           it "Non available db option" do
-            run_rdockerize("docker -d sqlit", should_fail: true) do |_status, output, _error|
+            run_rdockerize("docker -d sqlit", should_fail: true) do |_status, _output, error|
               expect(File.exist?(File.join(File.expand_path("../..", __dir__), "Dockerfile"))).to be_falsey
-              expect(output).to include("Non available db option")
+              expect(error).to include("Non available db option")
             end
           end
         end
@@ -149,10 +149,29 @@ RSpec.describe "rdockerize docker" do
 
         context "with error" do
           it "Non available db option" do
-            run_rdockerize("docker --database=sqlit", should_fail: true) do |_status, output, _error|
+            run_rdockerize("docker --database=sqlit", should_fail: true) do |_status, _output, error|
               expect(File.exist?(File.join(File.expand_path("../..", __dir__), "Dockerfile"))).to be_falsey
-              expect(output).to include("Non available db option")
+              expect(error).to include("Non available db option")
             end
+          end
+        end
+      end
+    end
+
+    context "set port" do
+      context "-p" do
+        it "3000" do
+          run_rdockerize("docker -p 3000") do |_status, _output, _error|
+            expect(File.exist?(File.join(File.expand_path("../..", __dir__), "Dockerfile"))).to be_truthy
+            expect(File.read(File.join(File.expand_path("../..", __dir__), "Dockerfile"))).to include("EXPOSE 3000")
+          end
+        end
+      end
+      context "--port" do
+        it "3000" do
+          run_rdockerize("docker -p 3000") do |_status, _output, _error|
+            expect(File.exist?(File.join(File.expand_path("../..", __dir__), "Dockerfile"))).to be_truthy
+            expect(File.read(File.join(File.expand_path("../..", __dir__), "Dockerfile"))).to include("EXPOSE 3000")
           end
         end
       end

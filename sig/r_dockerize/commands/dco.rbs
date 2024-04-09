@@ -5,11 +5,10 @@ module RDockerize
     class Dco < Base
       @user_temp: bool
       @show: bool
-
-      attr_reader db: string
-      attr_reader js: string
-      attr_reader subservices: array[string]
-      attr_reader volumes: string
+      @db: string
+      @js: string
+      @subservices: array[string]
+      @volumes: string
 
       def initialize: (args: Hash[Symbol, bool]) -> void
 

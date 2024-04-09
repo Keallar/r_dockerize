@@ -4,10 +4,10 @@ require_relative "../spec_helper"
 
 RSpec.describe "rdockerize save" do
   it "without options" do
-    run_rdockerize("save", should_fail: true) do |_status, output, _error|
+    run_rdockerize("save", should_fail: true) do |_status, _output, error|
       puts "output: #{output}"
-      expect(output).not_to be_empty
-      expect(output).to include("invalid option")
+      expect(error).not_to be_empty
+      expect(error).to include("invalid option")
     end
   end
 
@@ -23,22 +23,22 @@ RSpec.describe "rdockerize save" do
         end
 
         it "with failure validate" do
-          run_rdockerize("save -d './Doc'", should_fail: true) do |_status, output, _error|
-            expect(output).not_to be_empty
+          run_rdockerize("save -d './Doc'", should_fail: true) do |_status, _output, error|
+            expect(error).not_to be_empty
           end
         end
       end
 
       context "--dockerfile" do
         it "with successfully validate" do
-          run_rdockerize("save --dockerfile='./Dockerfile'") do |_status, output, _error|
+          run_rdockerize("save --dockerfile='./Dockerfile'") do |_status, output, error|
             expect(output).not_to be_empty
           end
         end
 
         it "with failure validate" do
-          run_rdockerize("save -d './mompose.yml'", should_fail: true) do |_status, output, _error|
-            expect(output).not_to be_empty
+          run_rdockerize("save -d './mompose.yml'", should_fail: true) do |_status, _output, error|
+            expect(error).not_to be_empty
           end
         end
       end

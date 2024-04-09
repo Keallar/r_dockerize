@@ -34,9 +34,10 @@ Options:
     -u, --user                       # Use saved user's template
     -j, --javascript=JAVASCRIPT      # Choose JavaScript approach [options: npm, yarn]
     -r, --ruby=RUBY_VERSION          # Choose version of ruby
-    -d, --database=DATABASE          # Choose database [options: sqlite]
+    -d, --database=DATABASE          # Choose database [options: postgresql, mysql, mongodb sqlite]
     --standard                       # Standard template
     -h, --help                       # Print help for command
+    -p, --port                       # Set port for expose
 ```
 2. `r_dockerize dco ` / `compose`/ `docker-compose [options]` - for create docker-compose.yml
 ```bash
@@ -48,7 +49,7 @@ Usage:
 Options:
     -s, --show                       # Show assembled docker-compose file
     -u, --user                       # Use saved user's template
-    -d, --database=DATABASE          # Choose database [options: sqlite]
+    -d, --database=DATABASE          # Choose database [options: postgresql, mysql, mongodb, sqlite]
     -b, --subservice=SUBSERVICE      # Choose subservice [options: redis rabbitmq sidekiq]
     -h, --help                       # Print help for command
 
